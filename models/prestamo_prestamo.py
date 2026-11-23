@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+ from odoo.exceptions import UserError
   
   
 class PrestamoPrestamo(models.Model): 
@@ -30,7 +31,7 @@ class PrestamoPrestamo(models.Model):
         default="borrador", 
         tracking=True, 
     ) 
-     linea_ids = fields.One2many("prestamo.linea", "prestamo_id", string="Equipos") 
+    linea_ids = fields.One2many("prestamo.linea", "prestamo_id", string="Equipos") 
     cantidad_equipos = fields.Integer( 
         string="Cantidad de equipos", compute="_compute_cantidad_equipos", store=True 
     ) 
@@ -51,3 +52,24 @@ class PrestamoPrestamo(models.Model):
                 prestamo.dias_prestamo = dias 
             else: 
                 prestamo.dias_prestamo = 0 
+
+    def action_prestar(self): 
+        for prestamo in self: 
+            if prestamo.state != "borrador": 
+                raise UserError("Solo se puede prestar un préstamo en borrador.") 
+            if not prestamo.linea_ids: 
+                raise UserError("Agregue al menos un equipo al préstamo.") 
+            prestamo.linea_ids.equipo_id.write({"estado": "prestado"}) 
+            prestamo.state = "prestado" 
+            prestamo.message_post( 
+                body=f"Se prestaron {prestamo.cantidad_equipos} equipo(s) " 
+                     f"a {prestamo.partner_id.name}." 
+            ) 
+  
+    def action_devolver(self): 
+        for prestamo in self: 
+            if prestamo.state not in ("prestado", "atrasado"): 
+                raise UserError("Solo se puede devolver un préstamo activo.") 
+            prestamo.linea_ids.equipo_id.write({"estado": "disponible"}) 
+            prestamo.state = "devuelto" 
+            prestamo.message_post(body="Los equipos fueron devueltos.")

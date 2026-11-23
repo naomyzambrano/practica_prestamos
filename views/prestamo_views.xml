@@ -18,6 +18,15 @@
         <field name="model">prestamo.prestamo</field> 
         <field name="arch" type="xml"> 
             <form> 
+            <header> 
+                    <button name="action_prestar" string="Prestar" type="object" 
+                            class="btn-primary" invisible="state != 'borrador'"/> 
+                    <button name="action_devolver" string="Devolver" type="object" 
+                            class="btn-primary" 
+                            invisible="state not in ('prestado', 'atrasado')"/> 
+                    <field name="state" widget="statusbar" 
+                           statusbar_visible="borrador,prestado,devuelto"/> 
+                </header>
                 <sheet> 
                     <div class="oe_title"> 
                         <h1><field name="name" placeholder="Motivo del préstamo"/></h1> 
