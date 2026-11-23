@@ -91,3 +91,18 @@ for prestamo in self:
 # TODO 3: un equipo no puede aparecer dos veces en el mismo préstamo. 
 # Pista: compare len(prestamo.linea_ids) con len(prestamo.linea_ids.equipo_id). 
 pass
+def action_marcar_atrasado(self):
+    hoy = fields.Date.context_today(self)
+
+    for prestamo in self:
+        if prestamo.state != "prestado":
+            raise UserError("Solo se puede marcar como atrasado un préstamo prestado.")
+
+        if prestamo.fecha_devolucion >= hoy:
+            raise UserError("La fecha de devolución todavía no ha pasado.")
+
+        prestamo.state = "atrasado"
+
+        prestamo.message_post(
+            body="El préstamo fue marcado como atrasado."
+        )
