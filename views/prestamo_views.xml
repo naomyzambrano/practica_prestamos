@@ -87,3 +87,7 @@
 </search> 
 </field> 
 </record> 
+<button name="action_marcar_atrasado"
+        string="Marcar atrasado"
+        type="object"
+        invisible="state != 'prestado'"/>
