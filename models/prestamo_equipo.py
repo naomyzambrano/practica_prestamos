@@ -1,4 +1,5 @@
-from odoo import fields, models 
+from odoo import fields, models
+from odoo.exceptions import UserError 
   
   
 class PrestamoEquipo(models.Model): 
@@ -40,3 +41,16 @@ def _compute_veces_prestado(self):
         equipo.veces_prestado = self.env["prestamo.linea"].search_count([
             ("equipo_id", "=", equipo.id)
         ])
+        def action_enviar_mantenimiento(self):
+            for equipo in self:
+                if equipo.estado == "prestado":
+                    raise UserError(
+                "No se puede enviar a mantenimiento un equipo prestado."
+            )
+
+        equipo.estado = "mantenimiento"
+
+
+def action_marcar_disponible(self):
+    for equipo in self:
+        equipo.estado = "disponible"

@@ -18,6 +18,17 @@
         <field name="model">prestamo.equipo</field> 
         <field name="arch" type="xml"> 
             <form> 
+            <header>
+    <button name="action_enviar_mantenimiento"
+            string="Enviar a mantenimiento"
+            type="object"
+            invisible="estado == 'mantenimiento'"/>
+
+    <button name="action_marcar_disponible"
+            string="Marcar disponible"
+            type="object"
+            invisible="estado == 'disponible'"/>
+</header>
             <field name="veces_prestado"/>
                 <sheet> 
                     <group> 
