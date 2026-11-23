@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<odoo> 
+    <record id="view_partner_form_prestamo_unicah" model="ir.ui.view"> 
+        <field name="name">res.partner.form.prestamo.unicah</field> 
+        <field name="model">res.partner</field> 
+        <field name="inherit_id" ref="base.view_partner_form"/> 
+        <field name="arch" type="xml"> 
+            <xpath expr="//notebook" position="inside"> 
+                <!-- TODO 1: pestaña "Préstamos" con el campo prestamo_ids de solo 
+                     lectura, en una lista con motivo, fechas y estado --> 
+            </xpath> 
+        </field> 
+    </record> 
+</odoo>

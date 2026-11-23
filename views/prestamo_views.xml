@@ -72,3 +72,18 @@
               action="prestamo_prestamo_action" 
               sequence="10"/> 
 </odoo>
+ <record id="prestamo_prestamo_view_search" model="ir.ui.view"> 
+        <field name="name">prestamo.prestamo.search</field> 
+        <field name="model">prestamo.prestamo</field> 
+        <field name="arch" type="xml"> 
+            <search> 
+                <field name="name"/> 
+                <field name="partner_id"/> 
+                <!-- TODO 3: filtro "Activos" (estado prestado o atrasado) --> 
+                <!-- TODO 4: filtro "Atrasados" (estado atrasado) --> 
+                <group> 
+                    <!-- TODO 5: agrupar por estado y por solicitante --> 
+</group> 
+</search> 
+</field> 
+</record> 

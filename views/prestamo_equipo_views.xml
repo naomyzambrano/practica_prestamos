@@ -50,3 +50,17 @@
               action="prestamo_equipo_action" 
               sequence="20"/> 
 </odoo>
+<record id="prestamo_equipo_view_kanban" model="ir.ui.view"> 
+        <field name="name">prestamo.equipo.kanban</field> 
+        <field name="model">prestamo.equipo</field> 
+        <field name="arch" type="xml"> 
+            <kanban default_group_by="estado"> 
+                <templates> 
+                    <t t-name="card"> 
+                        <!-- TODO 2: mostrar name en negrita (class="fw-bold"), 
+                             codigo y categoria --> 
+                    </t> 
+                </templates> 
+            </kanban> 
+        </field> 
+    </record> 
