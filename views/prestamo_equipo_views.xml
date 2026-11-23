@@ -18,6 +18,7 @@
         <field name="model">prestamo.equipo</field> 
         <field name="arch" type="xml"> 
             <form> 
+            <field name="veces_prestado"/>
                 <sheet> 
                     <group> 
                         <group> 
@@ -55,8 +56,13 @@
         <field name="model">prestamo.equipo</field> 
         <field name="arch" type="xml"> 
             <kanban default_group_by="estado"> 
+               <field name="veces_prestado"/>
                 <templates> 
                     <t t-name="card"> 
+                    <div>
+    Veces prestado:
+    <field name="veces_prestado"/>
+</div>
                         <!-- TODO 2: mostrar name en negrita (class="fw-bold"), 
                              codigo y categoria --> 
                     </t> 

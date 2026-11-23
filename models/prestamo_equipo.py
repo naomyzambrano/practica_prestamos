@@ -30,3 +30,13 @@ class PrestamoEquipo(models.Model):
     ) 
     notas = fields.Text(string="Notas") 
     active = fields.Boolean(string="Activo", default=True)
+    veces_prestado = fields.Integer(
+    string="Veces prestado",
+    compute="_compute_veces_prestado",
+)
+
+def _compute_veces_prestado(self):
+    for equipo in self:
+        equipo.veces_prestado = self.env["prestamo.linea"].search_count([
+            ("equipo_id", "=", equipo.id)
+        ])
